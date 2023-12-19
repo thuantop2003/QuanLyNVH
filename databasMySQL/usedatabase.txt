@@ -1,0 +1,25 @@
+tạo và đặt tên database là nvhmanagement
+
+nhập file nvhmanagement trong folder databaseMySQL vào để tạo các bảng 
+
+thông tin các bảng:
+
+1. account(userid,accountname,password,note)
+
+2. manageraccount(userid,accountname,password,secques,answer,note)
+
+3. request(hostid,request,note)
+
+4. work(userid,timeloggin,timeloggout)
+
+5. activity( activityid(tự tăng),name, renterid,timestart,timefinish,note)
+
+6. device( deviceid(tự tăng), devicename,amount,price,status('ok','borrowed','broken'),roomid,note)
+
+7. person( id, name,hostid,sdt,address,status,note)
+
+8. rent (activityid, deviceid,roomid,roomamount,deviceamount)
+
+9. renter( id, name,hostid,sdt,address,note)
+
+9. room ( roomid(tự tăng), name, capacity, price, status, note)
