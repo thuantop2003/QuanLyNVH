@@ -1,6 +1,6 @@
 package model;
 
-public class ManagerAccount implements InterfaceSearch<ManagerAccount> {
+public class ManagerAccount {
 	private int userId;
     private String accountName;
     private String password;
@@ -66,13 +66,11 @@ public class ManagerAccount implements InterfaceSearch<ManagerAccount> {
                 '}';
     }
 
-	@Override
 	public ManagerAccount[] searchALL() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public ManagerAccount[] searchByName() {
 		// TODO Auto-generated method stub
 		return null;
