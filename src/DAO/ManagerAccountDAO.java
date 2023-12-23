@@ -31,13 +31,13 @@ public class ManagerAccountDAO implements DAOInterface<ManagerAccount> {
 	}
 
 	@Override
-	public ManagerAccount selectByID(ManagerAccount t) {
+	public ManagerAccount selectByID(String t) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ManagerAccount selectByName(ManagerAccount t) {
+	public ManagerAccount selectByName(String t) {
 		// TODO Auto-generated method stub
 		return null;
 	}

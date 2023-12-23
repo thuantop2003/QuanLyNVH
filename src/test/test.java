@@ -3,13 +3,11 @@ package test;
 import java.sql.Connection;
 
 import DAO.AccountDAO;
-import database.JDBCUtil;
 import model.Account;
-
+import model.Request;
 public class test {
 	public static void main(String[] args) {
-		Account a= new Account("363", "hoangtranvan1", "1131");
-		AccountDAO.getInstance().delete(a);
-	}
-
+		Account t =new Account("tranthuan","thuan123");
+		System.out.println(t.changePassword("thuan1"));		
+}
 }

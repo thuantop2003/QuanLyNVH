@@ -7,6 +7,6 @@ public interface DAOInterface <T> {
 	public int update(T t);
 	public int delete (T t);
 	public ArrayList<T> selectAll();
-	public T selectByID(T t);
-	public T selectByName(T t);
+	public T selectByID(String t);
+	public T selectByName(String t);
 }

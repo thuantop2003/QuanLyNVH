@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import database.JDBCUtil;
 import model.Account;
+import model.Request;
 
 public class AccountDAO implements DAOInterface<Account> {
 	public static AccountDAO getInstance() {
@@ -113,18 +114,70 @@ public class AccountDAO implements DAOInterface<Account> {
 	}
 
 	@Override
-	public Account selectByID(Account t) {
-		// TODO Auto-generated method stub
-		return null;
+	public Account selectByID(String t) {
+		Account tt = new Account();
+		Connection connection = JDBCUtil.getConnection();
+		String sql= "SELECT * FROM account WHERE userid =? ";
+		System.out.println(sql);
+		try {
+			PreparedStatement pst = connection.prepareStatement(sql);
+			pst.setString(1,t);
+			ResultSet rs =pst.executeQuery();
+			String userid = rs.getString("userid");
+			String accountname = rs.getString("accountname");
+			String password = rs.getString("password");
+			Account a = new Account(userid,accountname,password);
+			tt=a;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		JDBCUtil.CloseConnection(connection);
+		return tt;
 	}
 
 	@Override
-	public Account selectByName(Account t) {
-		// TODO Auto-generated method stub
-		return null;
+	public Account selectByName(String t) {
+		Account tt = new Account();
+		Connection connection = JDBCUtil.getConnection();
+		String sql= "SELECT * FROM account WHERE accountname =? ";
+		System.out.println(sql);
+		try {
+			PreparedStatement pst = connection.prepareStatement(sql);
+			pst.setString(1,t);
+			ResultSet rs =pst.executeQuery();
+			
+			String userid = rs.getString("userid");
+			String accountname = rs.getString("accountname");
+			String password = rs.getString("password");
+			Account a = new Account(userid,accountname,password);
+			tt=a;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		JDBCUtil.CloseConnection(connection);
+		return tt;
 	}
-
-
-	
-
+	public int setRequest(Request t) {
+		Connection connection = JDBCUtil.getConnection();
+		String sql = "INSERT INTO request (hostid,request,note)"
+				+ "VALUES(?,?,?)";
+		PreparedStatement pst;
+		int ketqua=0;
+		try {
+			pst = connection.prepareStatement(sql);
+			pst.setString(1, t.getHostid());
+			pst.setString(2, t.getRequest());
+			pst.setString(3, "kcj");
+			ketqua =pst.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		JDBCUtil.CloseConnection(connection);
+		return ketqua;
+}
 }
