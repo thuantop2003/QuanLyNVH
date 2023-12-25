@@ -1,13 +1,19 @@
 package test;
 
 import java.sql.Connection;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 import DAO.AccountDAO;
+import DAO.RequestDAO;
 import model.Account;
 import model.Request;
 public class test {
 	public static void main(String[] args) {
-		Account t =new Account("tranthuan","thuan123");
-		System.out.println(t.changePassword("thuan1"));		
+		Account a= new Account();
+		ArrayList<Request> aa=a.searchRequest();
+		for (int i=0;i<aa.size();i++) {
+			System.out.println(aa.get(i).toString());
+		}
 }
 }

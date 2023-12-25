@@ -1,13 +1,34 @@
 package model;
 
+
 import java.util.ArrayList;
 
 import DAO.AccountDAO;
+import DAO.RequestDAO;
+
 
 public class Account {
 	private String userId;
     private String accountName;
     private String password;
+    private String note;
+    
+	public Account(String userId, String accountName, String password, String note) {
+		super();
+		this.userId = userId;
+		this.accountName = accountName;
+		this.password = password;
+		this.note = note;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
 	public Account(String userId, String accountName, String password) {
 		super();
 		this.userId = userId;
@@ -44,7 +65,8 @@ public class Account {
 	}
 	@Override
 	public String toString() {
-		return "Account [userId=" + userId + ", accountName=" + accountName + ", password=" + password + "]";
+		return "Account [userId=" + userId + ", accountName=" + accountName + ", password=" + password + ", note="
+				+ note + "]";
 	}
 	public boolean checkAccount() {
 		ArrayList<Account> accounts = new ArrayList<Account>();
@@ -64,9 +86,22 @@ public class Account {
 			AccountDAO.getInstance().update(this);
 			return true;
 		}
-		
-		
 		return false;
+	}
+	public int setRequest(Request t) {
+		ArrayList<Request> a= RequestDAO.getInstance().selectAll();
+		for (int i=0;i<a.size();i++) {
+			if(t.getHostid()==a.get(i).getHostid()&& t.getRequest()==a.get(i).getRequest()) {
+				return 0;
+			}
+		}
+		int kq=RequestDAO.getInstance().insert(t);
+		
+		return kq;
+	}
+	public ArrayList<Request> searchRequest(){
+		ArrayList<Request> a=RequestDAO.getInstance().selectAll();
+		return a;
 	}
     
 }

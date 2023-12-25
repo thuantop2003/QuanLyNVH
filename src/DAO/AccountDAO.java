@@ -1,5 +1,6 @@
 package DAO;
 
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 
 import database.JDBCUtil;
 import model.Account;
-import model.Request;
+
 
 public class AccountDAO implements DAOInterface<Account> {
 	public static AccountDAO getInstance() {
@@ -27,7 +28,7 @@ public class AccountDAO implements DAOInterface<Account> {
 			pst.setString(1,t.getUserId());
 			pst.setString(2, t.getAccountName());
 			pst.setString(3, t.getPassword());
-			pst.setString(4, "test");
+			pst.setString(4, t.getNote());
 			int ketqua =pst.executeUpdate();
 			System.out.println(ketqua);
 		} catch (SQLException e) {
@@ -52,7 +53,7 @@ public class AccountDAO implements DAOInterface<Account> {
 			pst.setString(4,t.getUserId());
 			pst.setString(1, t.getAccountName());
 			pst.setString(2, t.getPassword());
-			pst.setString(3,"test1");
+			pst.setString(3,t.getNote());
 			int ketqua =pst.executeUpdate();
 			System.out.println(ketqua);
 		} catch (SQLException e) {
@@ -99,7 +100,8 @@ public class AccountDAO implements DAOInterface<Account> {
 				String userid = rs.getString("userid");
 				String accountname = rs.getString("accountname");
 				String password = rs.getString("password");
-				Account a = new Account(userid,accountname,password);
+				String note = rs.getString("note");
+				Account a = new Account(userid,accountname,password,note);
 				ketQua.add(a);
 				
 			}
@@ -126,7 +128,8 @@ public class AccountDAO implements DAOInterface<Account> {
 			String userid = rs.getString("userid");
 			String accountname = rs.getString("accountname");
 			String password = rs.getString("password");
-			Account a = new Account(userid,accountname,password);
+			String note = rs.getString("note");
+			Account a = new Account(userid,accountname,password,note);
 			tt=a;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -150,7 +153,8 @@ public class AccountDAO implements DAOInterface<Account> {
 			String userid = rs.getString("userid");
 			String accountname = rs.getString("accountname");
 			String password = rs.getString("password");
-			Account a = new Account(userid,accountname,password);
+			String note = rs.getString("note");
+			Account a = new Account(userid,accountname,password,note);
 			tt=a;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -159,25 +163,4 @@ public class AccountDAO implements DAOInterface<Account> {
 		JDBCUtil.CloseConnection(connection);
 		return tt;
 	}
-	public int setRequest(Request t) {
-		Connection connection = JDBCUtil.getConnection();
-		String sql = "INSERT INTO request (hostid,request,note)"
-				+ "VALUES(?,?,?)";
-		PreparedStatement pst;
-		int ketqua=0;
-		try {
-			pst = connection.prepareStatement(sql);
-			pst.setString(1, t.getHostid());
-			pst.setString(2, t.getRequest());
-			pst.setString(3, "kcj");
-			ketqua =pst.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		JDBCUtil.CloseConnection(connection);
-		return ketqua;
-}
 }
