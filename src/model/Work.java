@@ -44,6 +44,5 @@ public class Work {
 		return "Work [userid=" + userid + ", AccountName=" + AccountName + ", timeloggin=" + timeloggin
 				+ ", timeloggout=" + timeloggout + "]";
 	}
-	
 
 }

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import database.JDBCUtil;
 import model.ManagerAccount;
+import model.Request;
 
 public class ManagerAccountDAO implements DAOInterface<ManagerAccount> {
 	public static ManagerAccountDAO getInstance() {
@@ -180,4 +181,18 @@ public class ManagerAccountDAO implements DAOInterface<ManagerAccount> {
 			}
 		}
 		return 0;}
+	public int setRequest(Request t) {
+		ArrayList<Request> a= RequestDAO.getInstance().selectAll();
+		for (int i=0;i<a.size();i++) {
+			if(t.getHostid()==a.get(i).getHostid()&& t.getRequest()==a.get(i).getRequest()) {
+				return 0;
+			}
+		}
+		int kq=RequestDAO.getInstance().insert(t);
+		return kq;
+	}
+	public ArrayList<Request> searchRequest(){
+		ArrayList<Request> a=RequestDAO.getInstance().selectAll();
+		return a;
+	}
 }

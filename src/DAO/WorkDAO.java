@@ -1,6 +1,7 @@
 package DAO;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -54,9 +55,48 @@ public class WorkDAO {
 				 b.add(a.get(i));
 			 }
 		 }
-		
 		return b;
+	}
+	public int deleteByTime(LocalDateTime t) {
+		Connection connection = JDBCUtil.getConnection();
+		int ketqua=0;
+		String sql= "DELETE from work "
+				+" WHERE timeloggin<?";
+		System.out.println(sql);
+		try {
+			PreparedStatement pst = connection.prepareStatement(sql);
+			pst.setObject(1, t);;
+			ketqua =pst.executeUpdate();
+			System.out.println(ketqua);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
+		JDBCUtil.CloseConnection(connection);
+		// TODO Auto-generated method stub
+		return ketqua;
+	}
+	public int insert(Work t) {
+		Connection connection = JDBCUtil.getConnection();
+		int ketqua=0;
+		String sql= "INSERT INTO work(userid,timeloggin,timeloggout) "
+				+" VALUES(?,?,?)";
+		try {
+			PreparedStatement pst = connection.prepareStatement(sql);
+			pst.setString(1, t.getUserid());
+			pst.setObject(2, t.getTimeloggin());
+			pst.setObject(3, t.getTimeloggout());
+			ketqua =pst.executeUpdate();
+			System.out.println(ketqua);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		JDBCUtil.CloseConnection(connection);
+		// TODO Auto-generated method stub
+		return ketqua;
 	}
 
 }

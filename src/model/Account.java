@@ -102,5 +102,9 @@ public class Account {
 		ArrayList<Request> a=RequestDAO.getInstance().selectAll();
 		return a;
 	}
+	public int deleteRequest ( Request t) {
+		int kq=RequestDAO.getInstance().delete(t);
+		return kq;
+	}
     
 }
