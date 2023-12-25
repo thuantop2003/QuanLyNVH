@@ -1,9 +1,12 @@
 package model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import DAO.AccountDAO;
+import DAO.LocalPersonDAO;
 import DAO.ManagerAccountDAO;
+import DAO.WorkDAO;
 
 public class ManagerAccount {
 	private String userId;
@@ -80,13 +83,33 @@ public class ManagerAccount {
 		return "ManagerAccount [userId=" + userId + ", accountName=" + accountName + ", password=" + password
 				+ ", securityQuestion=" + securityQuestion + ", answer=" + answer + "]";
 	}
+	public boolean checkManagerAccount() {
+		ArrayList<ManagerAccount> accounts = new ArrayList<ManagerAccount>();
+		accounts = ManagerAccountDAO.getInstance().selectAll();
+		for (int i = 0; i < accounts.size(); i++) {
+			if (this.getAccountName().equals(accounts.get(i).getAccountName()) &&
+		            this.getPassword().equals( accounts.get(i).getPassword())) {
+				this.setUserId(accounts.get(i).getUserId());
+				return true;
+			}
+		}
+		return false;
+	}
+	public boolean changePassword(String newpassword){
+		if(this.checkManagerAccount()) {
+			this.setPassword(newpassword);
+			ManagerAccountDAO.getInstance().update(this);
+			return true;
+		}
+		return false;
+	}
 
 	public ArrayList<ManagerAccount> selectManagerAccountAll() {
 		 ArrayList<ManagerAccount> a= ManagerAccountDAO.getInstance().selectAll();
 		return a;
 	}
 
-	public ManagerAccount searchByName(String accountName) {
+	public ManagerAccount searchManagerAccountByName(String accountName) {
 		ManagerAccount a = ManagerAccountDAO.getInstance().selectByName(accountName);
 		return a;
 	}
@@ -97,5 +120,57 @@ public class ManagerAccount {
 	public ArrayList<Account> selectAccountAll(){
 		ArrayList<Account> a=AccountDAO.getInstance().selectAll();
 		return a;	
+	}
+	public int makeNewAccount(Account t) {
+		if(t.checkAccount()) {
+		AccountDAO.getInstance().insert(t);
+		return 1;
+		}
+		return 0;
+	}
+	public int makeNewManagerAccount(ManagerAccount t) {
+		if(t.checkManagerAccount()) {
+		ManagerAccountDAO.getInstance().insert(t);
+		return 1;
+		}
+		return 0;
+	}
+	public ArrayList<Work> searchWorkALL() {
+		 ArrayList<Work> a = WorkDAO.getInstance().selectAll();
+		 return a;
+	}
+	public ArrayList<Work> searchWorkByTime(LocalDateTime t1,LocalDateTime t2){
+		ArrayList<Work> a = WorkDAO.getInstance().selectAll();
+		ArrayList<Work> b = new ArrayList<>();
+		for (int i=0; i< a.size();i++) {
+			if(a.get(i).getTimeloggin().compareTo(t1)>=0 && a.get(i).getTimeloggin().compareTo(t2)<=0) {
+				b.add(a.get(i));
+			}
+		}
+		return b;
+	}
+	public ArrayList<Person> searchLocalPersonALL() {
+		ArrayList<Person> p= LocalPersonDAO.getInstance().selectAll();
+		return p;
+	}
+	public int addLocalPerson(Person t) {
+		int ketqua = LocalPersonDAO.getInstance().insert(t);
+		return ketqua;
+	}
+	public int updateLocalPerson(Person t) {
+		int ketqua = LocalPersonDAO.getInstance().update(t);
+		return ketqua;
+	}
+	public ArrayList<Person> searchHouseholdByHostID(String t){
+		ArrayList<Person> p= LocalPersonDAO.getInstance().selectListByHostid(t);
+		return p;
+	}
+	public ArrayList<Person> searchPersonsByName(String t){
+		ArrayList<Person> p= LocalPersonDAO.getInstance().selectListByName(t);
+		return p;
+	}
+	public Person searchPersonsByID(String t){
+		Person p= LocalPersonDAO.getInstance().selectByID(t);
+		return p;
 	}
 }

@@ -168,4 +168,17 @@ public class ManagerAccountDAO implements DAOInterface<ManagerAccount> {
 		JDBCUtil.CloseConnection(connection);
 		return tt;
 	}
+	public int forgetPasswork(String accountname,String answer,String newpassword) {
+		ArrayList<ManagerAccount> a = this.selectAll();
+		for (int i=0; i< a.size();i++) {
+			if(a.get(i).getAnswer().equals(answer)) {
+				ManagerAccount tt =this.selectByName(accountname);
+				tt.setPassword(newpassword);
+				ManagerAccountDAO.getInstance().update(tt);
+				return 1;
+			}
+		}
+		return 0;
+		
+	}
 }

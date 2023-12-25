@@ -19,7 +19,7 @@ public class AccountDAO implements DAOInterface<Account> {
 	@Override
 	public int insert(Account t) {
 		Connection connection = JDBCUtil.getConnection();
-		
+		int ketqua=0;
 		String sql= "INSERT INTO account (userid,accountname,password,note)"
 				+ "VALUES(?,?,?,?)";
 		try {
@@ -29,7 +29,7 @@ public class AccountDAO implements DAOInterface<Account> {
 			pst.setString(2, t.getAccountName());
 			pst.setString(3, t.getPassword());
 			pst.setString(4, t.getNote());
-			int ketqua =pst.executeUpdate();
+			ketqua =pst.executeUpdate();
 			System.out.println(ketqua);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -38,12 +38,13 @@ public class AccountDAO implements DAOInterface<Account> {
 		
 		JDBCUtil.CloseConnection(connection);
 		// TODO Auto-generated method stub
-		return 0;
+		return ketqua;
 	}
 
 	@Override
 	public int update(Account t) {
 		Connection connection = JDBCUtil.getConnection();
+		int ketqua=0;
 		String sql= "UPDATE account "
 				+" SET accountname= ?, password=?, note=?"
 				+" WHERE userid=?";
@@ -54,7 +55,7 @@ public class AccountDAO implements DAOInterface<Account> {
 			pst.setString(1, t.getAccountName());
 			pst.setString(2, t.getPassword());
 			pst.setString(3,t.getNote());
-			int ketqua =pst.executeUpdate();
+			ketqua =pst.executeUpdate();
 			System.out.println(ketqua);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -62,20 +63,20 @@ public class AccountDAO implements DAOInterface<Account> {
 		}
 		JDBCUtil.CloseConnection(connection);
 		// TODO Auto-generated method stub
-		return 0;
+		return ketqua;
 	}
 
 	@Override
 	public int delete(Account t) {
 		Connection connection = JDBCUtil.getConnection();
-		
+		int ketqua=0;
 		String sql= "DELETE from account "
 				+" WHERE userid=?";
 		System.out.println(sql);
 		try {
 			PreparedStatement pst = connection.prepareStatement(sql);
 			pst.setString(1,t.getUserId());
-			int ketqua =pst.executeUpdate();
+			ketqua =pst.executeUpdate();
 			System.out.println(ketqua);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -84,7 +85,7 @@ public class AccountDAO implements DAOInterface<Account> {
 		
 		JDBCUtil.CloseConnection(connection);
 		// TODO Auto-generated method stub
-		return 0;
+		return ketqua;
 	}
 
 	@Override
