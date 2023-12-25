@@ -47,8 +47,9 @@ public class ManagerAccountDAO implements DAOInterface<ManagerAccount> {
 	public int update(ManagerAccount t) {
 		Connection connection = JDBCUtil.getConnection();
 		int ketqua=0;
-		String sql= "UPDATE manageraccount WHERE set accountname=?, password=?, secques=?, answer=?"
-				+ "WHERE userid=?";
+		String sql= "UPDATE manageraccount SET accountname=?, password=?, secques=?, answer=?"
+				+ " WHERE userid=?";
+		System.out.println(sql);
 		try {
 			PreparedStatement pst = connection.prepareStatement(sql);
 			
@@ -96,7 +97,7 @@ public class ManagerAccountDAO implements DAOInterface<ManagerAccount> {
 		ArrayList<ManagerAccount> ketQua = new ArrayList<>();
 		Connection connection = JDBCUtil.getConnection();
 		
-		String sql= "SELECT * FROM account ";
+		String sql= "SELECT * FROM manageraccount ";
 		System.out.println(sql);
 		try {
 			ResultSet rs = connection.createStatement().executeQuery(sql);
@@ -178,7 +179,5 @@ public class ManagerAccountDAO implements DAOInterface<ManagerAccount> {
 				return 1;
 			}
 		}
-		return 0;
-		
-	}
+		return 0;}
 }

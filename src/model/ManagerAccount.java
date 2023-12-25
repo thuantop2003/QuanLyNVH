@@ -2,7 +2,6 @@ package model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-
 import DAO.AccountDAO;
 import DAO.LocalPersonDAO;
 import DAO.ManagerAccountDAO;
@@ -27,6 +26,13 @@ public class ManagerAccount {
 		this.password = password;
 		this.securityQuestion = securityQuestion;
 		this.answer = answer;
+	}
+	
+
+	public ManagerAccount(String accountName, String password) {
+		super();
+		this.accountName = accountName;
+		this.password = password;
 	}
 
 	public ManagerAccount(String userId, String accountName, String password, String securityQuestion, String answer) {
@@ -122,14 +128,14 @@ public class ManagerAccount {
 		return a;	
 	}
 	public int makeNewAccount(Account t) {
-		if(t.checkAccount()) {
+		if(!t.checkAccount()) {
 		AccountDAO.getInstance().insert(t);
 		return 1;
 		}
 		return 0;
 	}
 	public int makeNewManagerAccount(ManagerAccount t) {
-		if(t.checkManagerAccount()) {
+		if(!t.checkManagerAccount()) {
 		ManagerAccountDAO.getInstance().insert(t);
 		return 1;
 		}
@@ -172,5 +178,26 @@ public class ManagerAccount {
 	public Person searchPersonsByID(String t){
 		Person p= LocalPersonDAO.getInstance().selectByID(t);
 		return p;
+	}
+	public int deleteAccount(Account t ) {
+		int ketqua=AccountDAO.getInstance().delete(t);	
+		return ketqua;
+				}
+	public int deleteManagerAccount(ManagerAccount t ) {
+		int ketqua=ManagerAccountDAO.getInstance().delete(t);	
+		return ketqua;
+		}
+	public int forgetPassword(String accountname,String answer,String newpassword) {
+		int ketqua = ManagerAccountDAO.getInstance().forgetPasswork(accountname, answer, newpassword);
+		return ketqua;
+		
+	}
+	public ArrayList<Work> selectWorkByTime(LocalDateTime t1, LocalDateTime t2){
+		ArrayList<Work> a= WorkDAO.getInstance().selectByTime(t1, t2);
+		return a;
+	}
+	public ArrayList<Work> selectWorkALL(){
+		ArrayList<Work> a= WorkDAO.getInstance().selectAll();
+		return a;
 	}
 }

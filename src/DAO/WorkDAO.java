@@ -47,9 +47,15 @@ public class WorkDAO {
 		// TODO Auto-generated method stub
 	}
 	public ArrayList<Work> selectByTime(LocalDateTime t1, LocalDateTime t2){
+		 ArrayList<Work> a=this.selectAll();
+		 ArrayList<Work> b=new ArrayList<>();
+		 for(int i=0;i<a.size();i++) {
+			 if(a.get(i).getTimeloggin().compareTo(t1)>=0&&a.get(i).getTimeloggin().compareTo(t2)<=0) {
+				 b.add(a.get(i));
+			 }
+		 }
 		
-		
-		return null;
+		return b;
 		
 	}
 

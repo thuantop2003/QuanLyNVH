@@ -96,7 +96,6 @@ public class Account {
 			}
 		}
 		int kq=RequestDAO.getInstance().insert(t);
-		
 		return kq;
 	}
 	public ArrayList<Request> searchRequest(){

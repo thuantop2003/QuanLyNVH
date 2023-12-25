@@ -97,9 +97,11 @@ public class LocalPersonDAO implements DAOInterface<Person> {
 		ArrayList<Person> ketqua= new ArrayList<Person>() ;
 		Connection connection = JDBCUtil.getConnection();
 		String sql= "SELECT * FROM person";
+		System.out.println(sql);
 		try {
 			PreparedStatement pst = connection.prepareStatement(sql);
 			ResultSet rs =pst.executeQuery();
+			while(rs.next()) {
 			String id= rs.getString("id");
 			String name= rs.getString("name");
 			String hostid= rs.getString("hostid");
@@ -109,6 +111,7 @@ public class LocalPersonDAO implements DAOInterface<Person> {
 			String note= rs.getString("note");
 			Person a=new Person(id, name, hostid, sdt, status, address, note);
 			ketqua.add(a);
+			}
 	
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -150,11 +153,12 @@ public class LocalPersonDAO implements DAOInterface<Person> {
 	public ArrayList<Person> selectListByName(String t) {
 		ArrayList<Person> ketqua= new ArrayList<Person>() ;
 		Connection connection = JDBCUtil.getConnection();
-		String sql= "SELECT * FROM person WHERE name =?";
+		String sql= "SELECT * FROM person WHERE id =?";
 		try {
 			PreparedStatement pst = connection.prepareStatement(sql);
 			pst.setString(1,t);
 			ResultSet rs =pst.executeQuery();
+			while(rs.next()) {
 			String id= rs.getString("id");
 			String name= rs.getString("name");
 			String hostid= rs.getString("hostid");
@@ -164,6 +168,7 @@ public class LocalPersonDAO implements DAOInterface<Person> {
 			String note= rs.getString("note");
 			Person a=new Person(id, name, hostid, sdt, status, address, note);
 			ketqua.add(a);
+			}
 	
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -182,6 +187,7 @@ public class LocalPersonDAO implements DAOInterface<Person> {
 			PreparedStatement pst = connection.prepareStatement(sql);
 			pst.setString(1,t);
 			ResultSet rs =pst.executeQuery();
+			while(rs.next()) {
 			String id= rs.getString("id");
 			String name= rs.getString("name");
 			String hostid= rs.getString("hostid");
@@ -191,6 +197,7 @@ public class LocalPersonDAO implements DAOInterface<Person> {
 			String note= rs.getString("note");
 			Person a=new Person(id, name, hostid, sdt, status, address, note);
 			ketqua.add(a);
+			}
 	
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
