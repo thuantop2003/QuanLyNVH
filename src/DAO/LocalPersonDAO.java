@@ -117,6 +117,32 @@ public class LocalPersonDAO implements DAOInterface<Person> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return ketqua;
+	}
+		public ArrayList<Person> selectHostId() {
+			ArrayList<Person> ketqua= new ArrayList<Person>() ;
+			Connection connection = JDBCUtil.getConnection();
+			String sql= "SELECT * FROM person where userid=hostid";
+			System.out.println(sql);
+			try {
+				PreparedStatement pst = connection.prepareStatement(sql);
+				ResultSet rs =pst.executeQuery();
+				while(rs.next()) {
+				String id= rs.getString("id");
+				String name= rs.getString("name");
+				String hostid= rs.getString("hostid");
+				String sdt= rs.getString("sdt");
+				String address= rs.getString("address");
+				String status= rs.getString("status");
+				String note= rs.getString("note");
+				Person a=new Person(id, name, hostid, sdt, status, address, note);
+				ketqua.add(a);
+				}
+		
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		
 		JDBCUtil.CloseConnection(connection);
 		// TODO Auto-generated method stub

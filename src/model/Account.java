@@ -68,6 +68,9 @@ public class Account {
 		return "Account [userId=" + userId + ", accountName=" + accountName + ", password=" + password + ", note="
 				+ note + "]";
 	}
+	
+	
+	// kiểm tra tài khoản mật khẩu để đăng nhập
 	public boolean checkAccount() {
 		ArrayList<Account> accounts = new ArrayList<Account>();
 		accounts = AccountDAO.getInstance().selectAll();
@@ -80,6 +83,7 @@ public class Account {
 		}
 		return false;
 	}
+	// đổi mật khẩu
 	public boolean changePassword(String newpassword){
 		if(this.checkAccount()) {
 			this.setPassword(newpassword);
@@ -88,6 +92,7 @@ public class Account {
 		}
 		return false;
 	}
+	// tạo yêu cầu
 	public int setRequest(Request t) {
 		ArrayList<Request> a= RequestDAO.getInstance().selectAll();
 		for (int i=0;i<a.size();i++) {
@@ -98,13 +103,16 @@ public class Account {
 		int kq=RequestDAO.getInstance().insert(t);
 		return kq;
 	}
+	
+	// thống kê các yêu cầu
 	public ArrayList<Request> searchRequest(){
 		ArrayList<Request> a=RequestDAO.getInstance().selectAll();
 		return a;
 	}
+	
+	// xóa yêu cầu
 	public int deleteRequest ( Request t) {
 		int kq=RequestDAO.getInstance().delete(t);
 		return kq;
-	}
-    
+	}    
 }
