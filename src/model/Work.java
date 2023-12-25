@@ -2,6 +2,8 @@ package model;
 
 import java.time.LocalDateTime;
 
+import DAO.WorkDAO;
+
 public class Work {
 	String userid;
 	String AccountName;
@@ -43,6 +45,10 @@ public class Work {
 	public String toString() {
 		return "Work [userid=" + userid + ", AccountName=" + AccountName + ", timeloggin=" + timeloggin
 				+ ", timeloggout=" + timeloggout + "]";
+	}
+	public int insert() {
+		int ketqua = WorkDAO.getInstance().insert(this);
+		return ketqua;
 	}
 
 }
