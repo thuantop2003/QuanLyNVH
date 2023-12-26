@@ -261,4 +261,18 @@ public class ManagerAccount {
 		int kq=RequestDAO.getInstance().delete(t);
 		return kq;
 	}  
+	public int setRequest(Request t) {
+		ArrayList<Request> a= RequestDAO.getInstance().selectAll();
+		for (int i=0;i<a.size();i++) {
+			if(t.getHostid()==a.get(i).getHostid()&& t.getRequest()==a.get(i).getRequest()) {
+				return 0;
+			}
+		}
+		int kq=RequestDAO.getInstance().insert(t);
+		return kq;
+	}
+	public int deleteLocalPerson(Person p) {
+		int ketqua = LocalPersonDAO.getInstance().delete(p);
+		return ketqua;
+	}
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 19, 2023 lúc 02:10 PM
+-- Thời gian đã tạo: Th12 26, 2023 lúc 04:56 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -31,7 +31,7 @@ CREATE TABLE `account` (
   `userid` varchar(30) NOT NULL,
   `accountname` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
-  `note` varchar(50) NOT NULL
+  `note` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -39,8 +39,10 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`userid`, `accountname`, `password`, `note`) VALUES
-('361', 'tuando', 'tuan123', ''),
-('362', 'tranthuan', 'thuan123', '');
+('311', 'hoang11', 'hoang1', NULL),
+('361', 'tuando', 'tuan1', NULL),
+('362', 'tranthuan', 'thuan1', 'test1'),
+('363', 'hoangtranvan1', '111111', 'test1');
 
 -- --------------------------------------------------------
 
@@ -51,7 +53,6 @@ INSERT INTO `account` (`userid`, `accountname`, `password`, `note`) VALUES
 CREATE TABLE `activity` (
   `activityid` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `renterid` varchar(30) NOT NULL,
   `timestart` datetime NOT NULL,
   `tìmefinish` datetime NOT NULL,
   `note` varchar(50) NOT NULL
@@ -61,8 +62,8 @@ CREATE TABLE `activity` (
 -- Đang đổ dữ liệu cho bảng `activity`
 --
 
-INSERT INTO `activity` (`activityid`, `name`, `renterid`, `timestart`, `tìmefinish`, `note`) VALUES
-(1, 'hop lop', '361', '2023-12-19 13:29:41', '2023-12-19 13:29:41', '');
+INSERT INTO `activity` (`activityid`, `name`, `timestart`, `tìmefinish`, `note`) VALUES
+(1, 'hop lop', '2023-12-19 13:29:41', '2023-12-19 13:29:41', '');
 
 -- --------------------------------------------------------
 
@@ -97,8 +98,8 @@ CREATE TABLE `manageraccount` (
   `userid` varchar(30) NOT NULL,
   `accountname` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
-  `secques` varchar(50) NOT NULL,
-  `answer` varchar(50) NOT NULL
+  `secques` varchar(50) DEFAULT NULL,
+  `answer` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -106,7 +107,7 @@ CREATE TABLE `manageraccount` (
 --
 
 INSERT INTO `manageraccount` (`userid`, `accountname`, `password`, `secques`, `answer`) VALUES
-('361', 'thuan123', 'thuan123', '1+1', '2');
+('361', 'thuan123', 'thuan1234', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -129,6 +130,7 @@ CREATE TABLE `person` (
 --
 
 INSERT INTO `person` (`id`, `name`, `hostid`, `sdt`, `address`, `status`, `note`) VALUES
+('333', 'hoang tran', '111', '12345', 'o nha', 'namdinh', NULL),
 ('361', 'do minh tuan', '362', '0123456789', 'nam dinh', 'trong pho', NULL),
 ('362', 'tran thuan', '362', '0123456788', 'nam dinh', 'trong pho', NULL);
 
@@ -143,15 +145,16 @@ CREATE TABLE `rent` (
   `deviceid` int(11) NOT NULL,
   `roomid` int(11) NOT NULL,
   `roomamount` int(11) NOT NULL,
-  `deviceamount` int(11) NOT NULL
+  `deviceamount` int(11) NOT NULL,
+  `renterid` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `rent`
 --
 
-INSERT INTO `rent` (`activityid`, `deviceid`, `roomid`, `roomamount`, `deviceamount`) VALUES
-(1, 1, 1, 1, 1);
+INSERT INTO `rent` (`activityid`, `deviceid`, `roomid`, `roomamount`, `deviceamount`, `renterid`) VALUES
+(1, 1, 1, 1, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -181,17 +184,23 @@ INSERT INTO `renter` (`renterid`, `name`, `sdt`, `address`, `note`) VALUES
 --
 
 CREATE TABLE `request` (
-  `hostid` int(11) NOT NULL,
+  `hostid` varchar(11) NOT NULL,
   `request` varchar(100) NOT NULL,
-  `note` varchar(50) NOT NULL
+  `note` varchar(50) NOT NULL,
+  `requestid` int(11) NOT NULL,
+  `time` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `request`
 --
 
-INSERT INTO `request` (`hostid`, `request`, `note`) VALUES
-(362, 'chuyen nha', '');
+INSERT INTO `request` (`hostid`, `request`, `note`, `requestid`, `time`) VALUES
+('362', 'chuyen nha', '', 1, NULL),
+('362', 'chuyen nha', 'kcj', 2, NULL),
+('362', 'chuyennha1', 'kcj', 3, '2023-12-25 09:57:29'),
+('363', 'chuyennha', 'kcj', 4, '2023-12-25 09:50:05'),
+('336', 'chuyennha', 'null', 5, '2023-01-01 12:00:00');
 
 -- --------------------------------------------------------
 
@@ -226,6 +235,13 @@ CREATE TABLE `work` (
   `timeloggin` datetime NOT NULL,
   `timeloggout` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `work`
+--
+
+INSERT INTO `work` (`userid`, `timeloggin`, `timeloggout`) VALUES
+(361, '2023-12-25 12:40:37', '2023-12-25 12:44:37');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -268,6 +284,12 @@ ALTER TABLE `renter`
   ADD PRIMARY KEY (`renterid`);
 
 --
+-- Chỉ mục cho bảng `request`
+--
+ALTER TABLE `request`
+  ADD PRIMARY KEY (`requestid`);
+
+--
 -- Chỉ mục cho bảng `room`
 --
 ALTER TABLE `room`
@@ -294,6 +316,12 @@ ALTER TABLE `activity`
 --
 ALTER TABLE `device`
   MODIFY `deviceid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT cho bảng `request`
+--
+ALTER TABLE `request`
+  MODIFY `requestid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT cho bảng `room`
