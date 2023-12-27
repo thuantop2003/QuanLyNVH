@@ -1,20 +1,24 @@
 package model;
 
-public class Activity implements InterfaceSearch<Activity>  {
+import java.util.ArrayList;
+import java.util.List;
+
+import DAO.ActivityDAO;
+
+
+public class Activity  {
 	private int activityId;
     private String activityName;
     private int renterId;
     private String timeStart;
     private String timeFinish;
-    private int rentId;
 	
-    public Activity(int activityId, String activityName, int renterId, String timeStart, String timeFinish, int rentId) {
+    public Activity(int activityId, String activityName, int renterId, String timeStart, String timeFinish) {
         this.activityId = activityId;
         this.activityName = activityName;
         this.renterId = renterId;
         this.timeStart = timeStart;
         this.timeFinish = timeFinish;
-        this.rentId = rentId;
     }
 
 	public int getActivityId() {
@@ -57,13 +61,6 @@ public class Activity implements InterfaceSearch<Activity>  {
 		this.timeFinish = timeFinish;
 	}
 
-	public int getRentId() {
-		return rentId;
-	}
-
-	public void setRentId(int rentId) {
-		this.rentId = rentId;
-	}
     
 	@Override
     public String toString() {
@@ -73,19 +70,84 @@ public class Activity implements InterfaceSearch<Activity>  {
                 ", renterId=" + renterId +
                 ", timeStart='" + timeStart + '\'' +
                 ", timeFinish='" + timeFinish + '\'' +
-                ", rentId=" + rentId +
                 '}';
     }
-
-	@Override
-	public Activity[] searchALL() {
-		// TODO Auto-generated method stub
-		return null;
+	
+	//ham check activity
+	public boolean checkActivity() {
+		if (this.getActivityName() != null && !this.getActivityName().isEmpty()) {
+            return true;  // Hoạt động hợp lệ
+        } else {
+            return false; // Hoạt động không hợp lệ
+        }
 	}
-
-	@Override
-	public Activity[] searchByName() {
-		// TODO Auto-generated method stub
-		return null;
+	//ham all pay
+	public int allPay() {
+		Activity pay = ActivityDAO.getInstance().selectByID(this);
+		if(pay == null) {
+			return 0;
+		}else {
+			return 1;
+		}
 	}
+	//ham searchSoonAct
+	public Activity[] searchSoonAct() {
+        List<Activity> soonActivities = new ArrayList<>();
+        ArrayList<Activity> act = new ArrayList<>();
+        act = ActivityDAO.getInstance().selectAll();
+
+        long currentTimeMillis = System.currentTimeMillis();
+
+        
+        for (Activity activity : act) {
+            if (convertTimeStringToMillis(activity.getTimeStart()) > currentTimeMillis) {
+                soonActivities.add(activity);
+            }
+        }
+
+ 
+        return soonActivities.toArray(new Activity[0]);
+    }
+
+   //ham chuyen thoi gian thanh millis
+    private long convertTimeStringToMillis(String timeString) {
+        
+        return 0;
+    }
+	//ham searchLateAct
+    public Activity[] searchLateAct() {
+        List<Activity> soonActivities = new ArrayList<>();
+        ArrayList<Activity> act = new ArrayList<>();
+        act = ActivityDAO.getInstance().selectAll();
+
+        long currentTimeMillis = System.currentTimeMillis();
+
+        
+        for (Activity activity : act) {
+            if (convertTimeStringToMillis(activity.getTimeFinish()) > currentTimeMillis) {
+                soonActivities.add(activity);
+            }
+        }
+
+ 
+        return soonActivities.toArray(new Activity[0]);
+    }
+    //ham searchActByTime
+    public Activity[] searchActByTime() {
+        List<Activity> soonActivities = new ArrayList<>();
+        ArrayList<Activity> act = new ArrayList<>();
+        act = ActivityDAO.getInstance().selectAll();
+
+        long currentTimeMillis = System.currentTimeMillis();
+
+        
+        for (Activity activity : act) {
+            if ((convertTimeStringToMillis(activity.getTimeStart()) < currentTimeMillis) && (convertTimeStringToMillis(activity.getTimeFinish()) > currentTimeMillis)) {
+                soonActivities.add(activity);
+            }
+        }
+
+ 
+        return soonActivities.toArray(new Activity[0]);
+    }
 }
